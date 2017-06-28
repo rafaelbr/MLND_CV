@@ -23,7 +23,7 @@ import br.com.geekfox.socialpicture.json.ImageData;
  */
 
 public class PictureDataService {
-    private static final String SERVICE_URL = "http://10.10.30.202:5000/";
+    private static final String SERVICE_URL = "http://104.197.163.59:5000/";
     private static final String SERVICE_ENDPOINT = "socialpicture/api/v1.0/images";
 
     public static List<ImageData> retrieveImages() {
@@ -58,7 +58,7 @@ public class PictureDataService {
                     return null;
                 resultJson = buffer.toString();
 
-                Type type = new TypeToken<ImageData>(){}.getType();
+                Type type = new TypeToken<List<ImageData>>(){}.getType();
                 List<ImageData> list = gson.fromJson(resultJson, type);
 
                 return list;

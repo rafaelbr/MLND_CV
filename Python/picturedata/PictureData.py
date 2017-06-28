@@ -1,5 +1,6 @@
 #!usr/bin/python
 from flask import jsonify, abort, request
+import json
 import os
 
 class PictureData:
@@ -19,8 +20,8 @@ class PictureData:
             self.data.append(image)
 
 
-    def get_data(self):
-        return jsonify({'data': self.data})
+    def get_data(self):        
+        return json.dumps(self.data)
 
     def get_image(self, image_id):
         image = [image for image in self.data if image['id'] == image_id]
