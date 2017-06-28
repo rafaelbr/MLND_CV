@@ -5,7 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="br.com.geekfox.socialpicture.Main2Activity">
+    tools:context="br.com.geekfox.socialpicture.activities.Main2Activity">
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

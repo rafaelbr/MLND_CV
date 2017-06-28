@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="188dp"
+        app:srcCompat="@drawable/no_image"
+        android:id="@+id/imgPicture"
+        android:layout_height="188dp"
+        android:layout_row="0"
+        android:layout_rowSpan="5"
+        android:layout_column="0" />
+
+    <TextView
+        android:text="No description yet"
+        android:layout_width="184dp"
+        android:layout_height="145dp"
+        android:id="@+id/txtDescription" />
+
+</GridLayout>
