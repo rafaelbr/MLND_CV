@@ -20,14 +20,14 @@ class PictureData:
             self.data.append(image)
 
 
-    def get_data(self):        
+    def get_data(self):
         return json.dumps(self.data)
 
     def get_image(self, image_id):
         image = [image for image in self.data if image['id'] == image_id]
         if len(image) == 0:
             abort(404)
-        return jsonify({'image':image[0]})
+        return jsonify(image[0])
 
     def new_image(self):
         if not request.json or not 'image' in request.json:
@@ -45,7 +45,7 @@ class PictureData:
             'description': ''
         }
         self.data.append(image)
-        return jsonify({'image': image}), 201
+        return jsonify(image), 201
 
     def add_description(self, image_id):
         if not request.json or not 'description' in request.json:
