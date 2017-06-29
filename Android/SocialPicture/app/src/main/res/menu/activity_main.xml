@@ -2,6 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.geekfox.socialpicture.activities.Main2Activity">
+    <item android:title="Refresh"
+        android:id="@+id/action_refresh" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

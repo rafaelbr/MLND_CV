@@ -96,6 +96,40 @@ public class Main2Activity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        else if (id == R.id.action_refresh) {
+            final List<ImageData> list = new ArrayList<>();
+            new AsyncTask<Void, Void, Void>(){
+
+                @Override
+                protected void onPreExecute() {
+                    super.onPreExecute();
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    if (list == null) {
+                        Toast.makeText(Main2Activity.this, "Error while retrieving image list.", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    List<ImageData> listImages = PictureDataService.retrieveImages();
+                    if (listImages != null) {
+                        list.addAll(listImages);
+
+                    }
+                    return null;
+                }
+            }.execute();
+
+            PicturesListAdapter adapter = new PicturesListAdapter(this, R.layout.imagelist_layout, list);
+            ListView listView = (ListView) findViewById(R.id.listView);
+            listView.setAdapter(adapter);
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

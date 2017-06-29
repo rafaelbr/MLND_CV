@@ -35,11 +35,15 @@ class PictureData:
 
         image_data = request.json.get('image')
         #save image
-        index = self.data[-1]['id'] + 1
+        index = 0
+        if len(self.data) > 0:
+            index = self.data[-1]['id'] + 1
+        else:
+            index = 1
         with open('images/{0}.{1}'.format(index, request.json.get('extension')), 'wb') as fh:
             fh.write(image_data.decode('base64'))
         image = {
-            'id': self.data[-1]['id'] + 1,
+            'id': index,
             'extension': request.json.get('extension'),
             'image': 'images/{0}.{1}'.format(index, request.json.get('extension')),
             'description': ''
@@ -50,6 +54,11 @@ class PictureData:
     def add_description(self, image_id):
         if not request.json or not 'description' in request.json:
             abort(400)
-        with open('descriptions/{0}.txt'.format(self.data[-1]['id'] + 1), 'a') as fh:
+        index = 0
+        if len(self.data) > 0:
+            index = self.data[-1]['id'] + 1;
+        else:
+            index = 1
+        with open('descriptions/{0}.txt'.format(index), 'a') as fh:
             fh.write('{0}\n'.format(request.json.get('description')))
         return jsonify({'result': 'Description added'})

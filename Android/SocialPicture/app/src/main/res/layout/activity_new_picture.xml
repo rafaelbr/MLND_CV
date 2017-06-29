@@ -39,7 +39,7 @@
         android:layout_marginTop="13dp"
         android:id="@+id/imageButton2"
         android:background="@android:color/transparent"
-        android:onClick="onClickNewCamera (NewPictureActivity)" />
+        android:onClick="onClickNewCamera" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -49,5 +49,5 @@
         android:layout_alignEnd="@+id/imageButton2"
         android:id="@+id/imageButton3"
         android:background="@android:color/transparent"
-        android:onClick="onClickSave (NewPictureActivity)" />
+        android:onClick="onClickSave" />
 </RelativeLayout>
