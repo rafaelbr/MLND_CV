@@ -1,10 +1,12 @@
 package br.com.geekfox.socialpicture.json;
 
+import java.io.Serializable;
+
 /**
  * Created by Rafael Brasileiro on 21/06/2017.
  */
 
-public class ImageData {
+public class ImageData implements Serializable{
 
     private int id;
     private String image;

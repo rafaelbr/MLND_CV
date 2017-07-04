@@ -55,10 +55,6 @@ class PictureData:
         if not request.json or not 'description' in request.json:
             abort(400)
         index = 0
-        if len(self.data) > 0:
-            index = self.data[-1]['id'] + 1;
-        else:
-            index = 1
-        with open('descriptions/{0}.txt'.format(index), 'a') as fh:
+        with open('descriptions/{0}.txt'.format(image_id), 'a') as fh:
             fh.write('{0}\n'.format(request.json.get('description')))
         return jsonify({'result': 'Description added'})

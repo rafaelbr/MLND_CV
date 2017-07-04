@@ -165,6 +165,61 @@ public class PictureDataService {
             urlConnection.connect();
 
             int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_CREATED) {
+                return RETURN_OK;
+            }
+            else {
+                return RETURN_ERROR;
+            }
+
+
+
+        }
+        catch (IOException e) {
+            Log.e("WebService", "Error sending image", e);
+            return RETURN_ERROR;
+        }
+        finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            if (reader != null) {
+                try {
+                    reader.close();
+                }
+                catch (final IOException e){
+                    Log.e("WebService", "Error closing stream", e);
+                }
+            }
+        }
+
+    }
+
+    public static int saveDescription(int id, String description) {
+
+        HttpURLConnection urlConnection = null;
+        BufferedReader reader = null;
+        BufferedWriter writer = null;
+
+        try {
+            URL url = new URL(SERVICE_URL + SERVICE_ENDPOINT + "/" + id);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("PUT");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            OutputStream os = urlConnection.getOutputStream();
+            writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+
+            String json = "{ \"id\": \"" + id + "\", \"description\": \"" + description +"\"}";
+
+            writer.write(json);
+            writer.flush();
+            writer.close();
+            os.close();
+
+
+            urlConnection.connect();
+
+            int responseCode = urlConnection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 return RETURN_OK;
             }
