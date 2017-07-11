@@ -56,6 +56,7 @@ class DataGenerator:
             for text in self.captions:
                 image_counter += 1
                 current_image = self.images[image_counter]
+                current_image = np.swapaxis(current_image, 0, 2)
                 for i in range(len(text.split())-1):
                     total_count += 1
                     partial = [self.word_index[txt] for txt in text.split()[:i+1]]
