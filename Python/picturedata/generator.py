@@ -62,7 +62,7 @@ class DataGenerator:
                     partial_caps.append(partial)
                     next = np.zeros(self.vocab_size)
                     next[self.word_index[text.split()[i+1]]] = 1
-                    next_words.append = next
+                    next_words.append(next)
                     imgs.append(current_image)
 
                     if total_count >= batch_size:
