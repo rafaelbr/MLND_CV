@@ -76,4 +76,9 @@ class DataGenerator:
                         partial_caps = []
                         imgs = []
                         next_words = []
-        
+
+    def getMaxCapLen(self):
+        return self.max_cap_len
+
+    def getVocabSize(self):
+        return self.vocab_size
