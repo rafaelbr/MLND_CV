@@ -12,7 +12,7 @@ class DataGenerator:
         self.index_word = None
         self.word_index = None
         self.total_samples = None
-        self.images = pickle.load(open('image_features.p', 'rb'))
+        self.images = pickle.load(open('image_features_classes.p', 'rb'))
         data = pd.read_csv('data/training.csv')
         self.captions = data['caption']
         self.initValues()
