@@ -1,19 +1,23 @@
 import pandas as pd
 import numpy as np
 import cv2
+import pickle
 from keras.preprocessing import image, sequence
 
 class DataGenerator:
 
-    def __init__(self, images, captions):
+    def __init__(self):
         self.max_cap_len = None
         self.vocab_size = None
         self.index_word = None
         self.word_index = None
         self.total_samples = None
-        self.images = images
-        self.captions = captions
+        self.images = pickle.load(open('image_features.p', 'rb'))
+        data = pd.from_csv('training.csv')
+        self.captions = data['caption']
         self.initValues()
+        self.word_index = pickle.load(open('world_index.p', "rb"))
+        self.index_world = pickle.load(open('index_world.p', 'rb'))
 
     def initValues(self):
 
@@ -29,11 +33,11 @@ class DataGenerator:
 
         unique = list(set(unique))
         self.vocab_size = len(unique)
-        self.word_index = {}
-        self.index_word = {}
-        for i, word in enumerate(unique):
-            self.word_index[word]=i
-            self.index_word[i]=word
+        #self.word_index = {}
+        #self.index_word = {}
+        #for i, word in enumerate(unique):
+        #    self.word_index[word]=i
+        #    self.index_word[i]=word
 
         max_len = 0
         for caption in self.captions:
@@ -56,7 +60,6 @@ class DataGenerator:
             for text in self.captions:
                 image_counter += 1
                 current_image = self.images[image_counter]
-                current_image = np.swapaxes(current_image, 0, 2)
                 for i in range(len(text.split())-1):
                     total_count += 1
                     partial = [self.word_index[txt] for txt in text.split()[:i+1]]
