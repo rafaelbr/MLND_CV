@@ -16,8 +16,8 @@ class DataGenerator:
         data = pd.read_csv('data/training.csv')
         self.captions = data['caption']
         self.initValues()
-        self.word_index = pickle.load(open('world_index.p', "rb"))
-        self.index_world = pickle.load(open('index_world.p', 'rb'))
+        self.word_index = pickle.load(open('word_index.p', "rb"))
+        self.index_world = pickle.load(open('index_word.p', 'rb'))
 
     def initValues(self):
 
