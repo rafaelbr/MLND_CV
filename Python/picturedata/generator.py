@@ -16,8 +16,8 @@ class DataGenerator:
         data = pd.read_csv('data/training.csv')
         self.captions = data['caption']
         self.initValues()
-        self.word_index = []
-        self.index_world = []
+        self.word_index = {}
+        self.index_world = {}
 
     def initValues(self):
 
