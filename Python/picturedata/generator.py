@@ -16,8 +16,8 @@ class DataGenerator:
         data = pd.read_csv('data/training.csv')
         self.captions = data['caption']
         self.initValues()
-        self.word_index = pickle.load(open('word_index.p', "rb"))
-        self.index_world = pickle.load(open('index_word.p', 'rb'))
+        self.word_index = []
+        self.index_world = []
 
     def initValues(self):
 
@@ -33,11 +33,11 @@ class DataGenerator:
 
         unique = list(set(unique))
         self.vocab_size = len(unique)
-        #self.word_index = {}
-        #self.index_word = {}
-        #for i, word in enumerate(unique):
-        #    self.word_index[word]=i
-        #    self.index_word[i]=word
+        self.word_index = {}
+        self.index_word = {}
+        for i, word in enumerate(unique):
+            self.word_index[word]=i
+            self.index_word[i]=word
 
         max_len = 0
         for caption in self.captions:
