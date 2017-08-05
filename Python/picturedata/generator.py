@@ -76,7 +76,7 @@ class DataGenerator:
                         total_count = 0
                         gen_count += 1
                         #print "yielding count: " + str(gen_count)
-                        yield [[imgs, partial_caps], next_words]
+                        yield [[imgs], next_words]
                         partial_caps = []
                         imgs = []
                         next_words = []
