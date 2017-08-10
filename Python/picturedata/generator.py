@@ -24,7 +24,7 @@ class DataGenerator:
             self.total_samples+=len(text['caption'].split())-1
         print "Total samples : "+str(self.total_samples)
 
-        words = [txt['caption'].split() for txt in self.data]
+        words = [txt['caption'].split() for i, txt in self.data.iterrows()]
         unique = []
         for word in words:
             unique.extend(word)
