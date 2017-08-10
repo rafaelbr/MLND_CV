@@ -155,7 +155,12 @@ ENV/
 
 #npy
 *.npy
+/Python/images
+/Python/data
 /data
-
+/Python/annotations
+*.p
+*.h5
+*.hdf5
 # mypy
 .mypy_cache/
