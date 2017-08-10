@@ -20,7 +20,7 @@ class DataGenerator:
     def initValues(self):
 
         self.total_samples=0
-        for text in self.data:
+        for i, text in self.data.iterrows():
             self.total_samples+=len(text['caption'].split())-1
         print "Total samples : "+str(self.total_samples)
 
@@ -46,7 +46,7 @@ class DataGenerator:
         print "Maximum caption length: "+str(self.max_cap_len)
 
         self.images = []
-        for i, caption in self.data:
+        for i, caption in self.data.iterrows():
             self.images.append(data[caption['image']])
 
     def generate(self, batch_size=32):
