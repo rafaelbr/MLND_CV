@@ -13,7 +13,7 @@ class DataGenerator:
         self.word_index = None
         self.total_samples = None
         self.features = pickle.load(open('image_features.p', 'rb'))
-        self.data = pd.read_csv('data/flickr8k_train.csv', delimiter=',')
+        self.data = pd.read_csv('data/flickr8k_train.csv', delimiter=';')
 
         self.initValues()
 
