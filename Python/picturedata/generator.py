@@ -47,7 +47,7 @@ class DataGenerator:
 
         self.images = []
         for i, caption in self.data.iterrows():
-            self.images.append(self.data[caption['image']])
+            self.images.append(self.data[self.data['image'] == caption['image']])
 
     def generate(self, batch_size=32):
         partial_caps = []
