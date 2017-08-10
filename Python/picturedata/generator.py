@@ -59,12 +59,12 @@ class DataGenerator:
         total_count = 1
         while 1:
             image_counter = -1
-            for text in self.data:
+            for i, text in self.data.iterrows():
                 image_counter += 1
                 current_image = self.images[image_counter]
                 for i in range(len(text['caption'].split())-1):
                     total_count += 1
-                    partial = [self.word_index[txt] for i, txt in text['caption'].split()[:i+1]]
+                    partial = [self.word_index[txt] for txt in text['caption'].split()[:i+1]]
                     partial_caps.append(partial)
                     next = np.zeros(self.vocab_size)
                     next[self.word_index[text[1].split()[i+1]]] = 1
