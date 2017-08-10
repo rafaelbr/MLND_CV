@@ -20,11 +20,11 @@ class DataGenerator:
     def initValues(self):
 
         self.total_samples=0
-        for text in self.captions:
-            self.total_samples+=len(text.split())-1
+        for text in self.data:
+            self.total_samples+=len(text['caption'].split())-1
         print "Total samples : "+str(self.total_samples)
 
-        words = [txt.split() for txt in self.captions]
+        words = [txt['caption'].split() for txt in self.data]
         unique = []
         for word in words:
             unique.extend(word)
@@ -39,7 +39,7 @@ class DataGenerator:
 
         max_len = 0
         for caption in self.data:
-            if(len(caption[1].split()) > max_len):
+            if(len(caption['caption'].split()) > max_len):
                 max_len = len(caption.split())
         self.max_cap_len = max_len
         print "Vocabulary size: "+str(self.vocab_size)
@@ -47,7 +47,7 @@ class DataGenerator:
 
         self.images = []
         for caption in self.data:
-            self.images.append(data[caption[0]])
+            self.images.append(data[caption['image']])
 
     def generate(self, batch_size=32):
         partial_caps = []
@@ -62,9 +62,9 @@ class DataGenerator:
             for text in self.data:
                 image_counter += 1
                 current_image = self.images[image_counter]
-                for i in range(len(text[1].split())-1):
+                for i in range(len(text['caption'].split())-1):
                     total_count += 1
-                    partial = [self.word_index[txt] for txt in text[1].split()[:i+1]]
+                    partial = [self.word_index[txt] for txt in text['caption'].split()[:i+1]]
                     partial_caps.append(partial)
                     next = np.zeros(self.vocab_size)
                     next[self.word_index[text[1].split()[i+1]]] = 1
