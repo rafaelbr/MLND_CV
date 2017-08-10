@@ -40,7 +40,7 @@ class DataGenerator:
         max_len = 0
         for i, caption in self.data.iterrows():
             if(len(caption['caption'].split()) > max_len):
-                max_len = len(caption.split())
+                max_len = len(caption['caption'].split())
         self.max_cap_len = max_len
         print "Vocabulary size: "+str(self.vocab_size)
         print "Maximum caption length: "+str(self.max_cap_len)
