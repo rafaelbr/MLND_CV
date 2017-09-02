@@ -159,6 +159,7 @@ ENV/
 /Python/data
 /data
 /Python/annotations
+/Python/Flickr8k
 *.p
 *.h5
 *.hdf5
