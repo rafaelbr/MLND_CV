@@ -15,9 +15,11 @@ class PictureData:
     def processData(self):
         self.data = []
         generator = CaptionGenerator()
-        generator.train()
-        #load data from filesystem
         files = os.listdir('images')
+        if len(files) > 0:
+            generator.train()
+        #load data from filesystem
+
         for f in files:
             file_data = f.split('.')
             files_desc = os.listdir('descriptions')
@@ -27,7 +29,7 @@ class PictureData:
                 if data[0] == file_data[0]:
                     hasDesc = True
                     break;
-            if hasDesc:
+            if hasDesc and len(files) > 0:
                 image = {
                     'id': file_data[0],
                     'image': '/images/{0}'.format(f),
