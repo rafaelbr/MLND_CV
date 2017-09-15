@@ -58,8 +58,8 @@ class CaptionGenerator:
         return img_feature
 
     def initValues(self):
-        loadCaptions()
-        processImages()
+        self.loadCaptions()
+        self.processImages()
         self.total_samples=0
         for i, text in self.data.iterrows():
             self.total_samples+=len(text['caption'].split())-1
