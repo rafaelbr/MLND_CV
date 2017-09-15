@@ -3,6 +3,7 @@ from flask import jsonify, abort, request
 from CaptionGen import CaptionGenerator
 import json
 import os
+import Timer
 
 class PictureData:
     data = []
