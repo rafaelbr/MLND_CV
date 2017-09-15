@@ -16,7 +16,7 @@ class PictureData:
         self.data = []
         generator = CaptionGenerator()
         files = os.listdir('images')
-        if len(files) > 0:
+        if len(files) > 0 and len(os.listdir(descriptions)) > 0:
             generator.train()
         #load data from filesystem
 
