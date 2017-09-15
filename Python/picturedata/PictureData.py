@@ -3,14 +3,14 @@ from flask import jsonify, abort, request
 from CaptionGen import CaptionGenerator
 import json
 import os
-import Timer
+import threading
 
 class PictureData:
     data = []
 
     def __init__(self):
         self.processData()
-        t = Timer(7200, self.processData)
+        t = threading.Timer(7200, self.processData)
         t.start()
 
     def processData(self):
