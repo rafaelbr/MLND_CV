@@ -131,20 +131,20 @@ class CaptionGenerator:
                         next_words = []
 
     def train(self):
-        model = load_model('../Models/WholeModel.h5')
+        model = load_model('Models/WholeModel.h5')
         model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
         model.fit_generator(generate(batch_size=32), steps_per_epoch=total_samples/32, epochs=20, verbose=1, callbacks=callbacks_list)
         try:
-            model.save('../Models/WholeModel.h5', overwrite=True)
-            model.save_weights('../Models/Weights.h5',overwrite=True)
+            model.save('Models/WholeModel.h5', overwrite=True)
+            model.save_weights('Models/Weights.h5',overwrite=True)
         except:
             print "Error in saving model."
 
     def generateCaption(filename):
-        model = load_model('../Models/WholeModel.h5')
+        model = load_model('Models/WholeModel.h5')
         image_feature = self.processImage(filename)
         start = [word_index['<start>']]
         captions = [[start, 0.0]]
