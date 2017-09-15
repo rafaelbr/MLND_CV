@@ -8,8 +8,8 @@ class PictureData:
     data = []
 
     def __init__(self):
-        processData()
-        t = Timer(7200, processData)
+        self.processData()
+        t = Timer(7200, self.processData)
         t.start()
 
     def processData(self):
@@ -32,7 +32,7 @@ class PictureData:
                     'id': file_data[0],
                     'image': '/images/{0}'.format(f),
                     'extension': file_data[1],
-                    'description': generateCaption(f)
+                    'description': generator.generateCaption(f)
                     }
             else:
                 image = {

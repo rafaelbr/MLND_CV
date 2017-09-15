@@ -40,7 +40,7 @@ class CaptionGenerator:
         img_features = {}
         for img in imgs:
             c += 1
-            img_feature = processImage(img)
+            img_feature = self.processImage(img)
             #img_feature = np.asarray(img_feature)
             #img_feature = img_feature.argmax(axis=-1)
             if c % 100 == 0:
@@ -145,7 +145,7 @@ class CaptionGenerator:
 
     def generateCaption(filename):
         model = load_model('../Models/WholeModel.h5')
-        image_feature = processImage(filename)
+        image_feature = self.processImage(filename)
         start = [word_index['<start>']]
         captions = [[start, 0.0]]
         while(len(captions[0][0]) < max_cap_len):
