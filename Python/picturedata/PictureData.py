@@ -1,5 +1,6 @@
 #!usr/bin/python
 from flask import jsonify, abort, request
+from CaptionGen import CaptionGenerator
 import json
 import os
 
@@ -7,16 +8,40 @@ class PictureData:
     data = []
 
     def __init__(self):
+        processData()
+        t = Timer(7200, processData)
+        t.start()
+
+    def processData(self):
+        self.data = []
+        generator = CaptionGenerator()
+        generator.train()
         #load data from filesystem
         files = os.listdir('images')
         for f in files:
             file_data = f.split('.')
-            image = {
-                'id': file_data[0],
-                'image': '/images/{0}'.format(f),
-                'extension': file_data[1],
-                'description': ''
-            }
+            files_desc = os.listdir('descriptions')
+            hasDesc = False
+            for f_desc in files_desc:
+                data = f_desc.split('.')
+                if data[0] == file_data[0]:
+                    hasDesc = True
+                    break;
+            if hasDesc:
+                image = {
+                    'id': file_data[0],
+                    'image': '/images/{0}'.format(f),
+                    'extension': file_data[1],
+                    'description': generateCaption(f)
+                    }
+            else:
+                image = {
+                    'id': file_data[0],
+                    'image': '/images/{0}'.format(f),
+                    'extension': file_data[1],
+                    'description': ''
+                    }
+
             self.data.append(image)
 
 

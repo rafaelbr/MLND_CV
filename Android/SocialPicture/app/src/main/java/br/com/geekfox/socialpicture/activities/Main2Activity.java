@@ -71,7 +71,7 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                if (list.isEmpty()) {
+                if (list == null) {
                     Toast.makeText(Main2Activity.this, "Error while retrieving image list.", Toast.LENGTH_LONG).show();
 
                 }

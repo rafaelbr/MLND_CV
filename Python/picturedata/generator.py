@@ -24,11 +24,13 @@ class DataGenerator:
             self.total_samples+=len(text['caption'].split())-1
         print "Total samples : "+str(self.total_samples)
 
+        # Split captions into words
         words = [txt['caption'].split() for i, txt in self.data.iterrows()]
         unique = []
         for word in words:
             unique.extend(word)
 
+        # Genrate Vocabulary and index lists
         unique = list(set(unique))
         self.vocab_size = len(unique)
         self.word_index = {}
@@ -37,6 +39,7 @@ class DataGenerator:
             self.word_index[word]=i
             self.index_word[i]=word
 
+        # Get max length of captions
         max_len = 0
         for i, caption in self.data.iterrows():
             if(len(caption['caption'].split()) > max_len):
@@ -64,14 +67,16 @@ class DataGenerator:
                 image_counter += 1
                 current_image = self.images[image_counter]
                 for i in range(len(text['caption'].split())-1):
+                    # Encode caption into index of words, removing last word.
                     total_count += 1
                     partial = [self.word_index[txt] for txt in text['caption'].split()[:i+1]]
                     partial_caps.append(partial)
+                    # Get last word as next word and encode it
                     next = np.zeros(self.vocab_size)
                     next[self.word_index[text[1].split()[i+1]]] = 1
                     next_words.append(next)
                     imgs.append(current_image)
-
+                    # Prepare inputs and return pair for batch
                     if total_count >= batch_size:
                         next_words = np.asarray(next_words)
                         imgs = np.asarray(imgs)
