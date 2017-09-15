@@ -30,7 +30,7 @@ class CaptionGenerator:
             for text in content:
                 d['caption'].append(x.strip())
                 d['image'].append(filename)
-        self.data = pd.Dataframe(d)
+        self.data = pd.DataFrame(d)
 
     def processImages(self):
         model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
