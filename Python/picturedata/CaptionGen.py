@@ -6,6 +6,7 @@ import os
 from keras.preprocessing import image, sequence
 from keras.applications.vgg16 import VGG16, preprocess_input
 from keras.models import load_model
+from keras.callbacks import ModelCheckpoint
 
 class CaptionGenerator:
 
