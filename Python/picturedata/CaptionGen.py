@@ -130,7 +130,7 @@ class CaptionGenerator:
                         imgs = []
                         next_words = []
 
-    def train():
+    def train(self):
         model = load_model('../Models/WholeModel.h5')
         model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
