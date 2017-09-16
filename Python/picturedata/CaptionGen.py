@@ -36,21 +36,23 @@ class CaptionGenerator:
         self.data = pd.DataFrame(d)
 
     def processImages(self):
-        model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
-        img_dir = "images/"
         imgs = self.data['image']
-        c = 0
-        img_features = {}
-        for img in imgs:
-            c += 1
-            img_feature = self.processImage(model, img)
-            #img_feature = np.asarray(img_feature)
-            #img_feature = img_feature.argmax(axis=-1)
-            if c % 100 == 0:
-                print "Processed {0} images".format(c)
-            img_features[img] = img_feature[0]
-        self.features = img_features
-        K.clear_session()
+        if len(imgs) > 0:
+            model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
+            img_dir = "images/"
+            imgs = self.data['image']
+            c = 0
+            img_features = {}
+            for img in imgs:
+                c += 1
+                img_feature = self.processImage(model, img)
+                #img_feature = np.asarray(img_feature)
+                #img_feature = img_feature.argmax(axis=-1)
+                if c % 100 == 0:
+                    print "Processed {0} images".format(c)
+                img_features[img] = img_feature[0]
+            self.features = img_features
+            K.clear_session()
 
     def processImage(model, filename):
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
