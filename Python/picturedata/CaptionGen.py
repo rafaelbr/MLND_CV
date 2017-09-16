@@ -8,6 +8,7 @@ from keras.applications.vgg16 import VGG16, preprocess_input
 from keras.models import load_model
 from keras.callbacks import ModelCheckpoint
 import gc
+from keras import backend as K
 
 class CaptionGenerator:
 
@@ -42,15 +43,16 @@ class CaptionGenerator:
         img_features = {}
         for img in imgs:
             c += 1
-            img_feature = self.processImage(img)
+            img_feature = self.processImage(model, img)
             #img_feature = np.asarray(img_feature)
             #img_feature = img_feature.argmax(axis=-1)
             if c % 100 == 0:
                 print "Processed {0} images".format(c)
             img_features[img] = img_feature[0]
         self.features = img_features
+        K.clear_session()
 
-    def processImage(filename):
+    def processImage(model, filename):
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
         img_s = image.img_to_array(img_s)
         img_s = np.expand_dims(img_s, axis=0)
@@ -144,13 +146,15 @@ class CaptionGenerator:
         try:
             self.model.save('Models/WholeModel.h5', overwrite=True)
             self.model.save_weights('Models/Weights.h5',overwrite=True)
-            gc.collect()
+            K.clear_session()
         except:
             print "Error in saving model."
 
     def generateCaption(filename):
+        image_feature = self.processImage(VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3)), filename)
+        K.clear_session()
         self.model = load_model('Models/WholeModel.h5')
-        image_feature = self.processImage(filename)
+
         start = [self.word_index['<start>']]
         captions = [[start, 0.0]]
         while(len(captions[0][0]) < self.max_cap_len):
@@ -176,7 +180,7 @@ class CaptionGenerator:
 
         caption_split = caption.split()
         processed_caption = caption_split[1:]
-        gc.collect()
+        K.clear_session()
         try:
             end_index = processed_caption.index('<end>')
             processed_caption = processed_caption[:end_index]
