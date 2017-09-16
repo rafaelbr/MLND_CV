@@ -37,6 +37,7 @@ class CaptionGenerator:
 
     def processImages(self):
         imgs = self.data['image']
+        print len(imgs)
         if len(imgs) > 0:
             model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
             img_dir = "images/"
