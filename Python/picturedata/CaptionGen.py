@@ -7,6 +7,7 @@ from keras.preprocessing import image, sequence
 from keras.applications.vgg16 import VGG16, preprocess_input
 from keras.models import load_model
 from keras.callbacks import ModelCheckpoint
+import gc
 
 class CaptionGenerator:
 
@@ -48,6 +49,7 @@ class CaptionGenerator:
                 print "Processed {0} images".format(c)
             img_features[img] = img_feature[0]
         self.features = img_features
+        gc.collect()
 
     def processImage(filename):
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
@@ -134,14 +136,14 @@ class CaptionGenerator:
                         next_words = []
 
     def train(self):
-        model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
-        model.fit_generator(self.generate(batch_size=32), steps_per_epoch=self.total_samples/32, epochs=20, verbose=1, callbacks=callbacks_list)
+        self.model.fit_generator(self.generate(batch_size=32), steps_per_epoch=self.total_samples/32, epochs=20, verbose=1, callbacks=callbacks_list)
         try:
-            model.save('Models/WholeModel.h5', overwrite=True)
-            model.save_weights('Models/Weights.h5',overwrite=True)
+            self.model.save('Models/WholeModel.h5', overwrite=True)
+            self.model.save_weights('Models/Weights.h5',overwrite=True)
         except:
             print "Error in saving model."
 
@@ -153,7 +155,7 @@ class CaptionGenerator:
             temp_captions = []
             for caption in captions:
                 partial_caption = sequence.pad_sequences([caption[0]], maxlen=self.max_cap_len, padding='post')
-                next_words_pred = model.predict([np.asarray([image_feature]), np.asarray(partial_caption)])[0]
+                next_words_pred = self.model.predict([np.asarray([image_feature]), np.asarray(partial_caption)])[0]
                 next_words = np.argsort(next_words_pred)[-3:]
                 for word in next_words:
                     new_partial_caption, new_partial_caption_prob = caption[0][:], caption[1]
