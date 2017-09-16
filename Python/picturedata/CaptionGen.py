@@ -49,7 +49,6 @@ class CaptionGenerator:
                 print "Processed {0} images".format(c)
             img_features[img] = img_feature[0]
         self.features = img_features
-        gc.collect()
 
     def processImage(filename):
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
@@ -97,7 +96,7 @@ class CaptionGenerator:
             self.images.append(self.features[caption['image']])
         print "Image count: "+str(len(self.images))
 
-        self.model = load_model('Models/WholeModel.h5')
+
 
     def generate(self, batch_size=32):
         partial_caps = []
@@ -136,6 +135,7 @@ class CaptionGenerator:
                         next_words = []
 
     def train(self):
+        self.model = load_model('Models/WholeModel.h5')
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
@@ -144,10 +144,12 @@ class CaptionGenerator:
         try:
             self.model.save('Models/WholeModel.h5', overwrite=True)
             self.model.save_weights('Models/Weights.h5',overwrite=True)
+            gc.collect()
         except:
             print "Error in saving model."
 
     def generateCaption(filename):
+        self.model = load_model('Models/WholeModel.h5')
         image_feature = self.processImage(filename)
         start = [self.word_index['<start>']]
         captions = [[start, 0.0]]
@@ -174,7 +176,7 @@ class CaptionGenerator:
 
         caption_split = caption.split()
         processed_caption = caption_split[1:]
-
+        gc.collect()
         try:
             end_index = processed_caption.index('<end>')
             processed_caption = processed_caption[:end_index]
