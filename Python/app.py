@@ -1,6 +1,6 @@
 #!flask/bin/python
 from flask import Flask, send_from_directory
-from picturedata import PictureData
+from picturedata.PictureData import PictureData
 
 app = Flask(__name__)
 
