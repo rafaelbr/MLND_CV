@@ -175,7 +175,7 @@ class CaptionGenerator:
             print "Error in saving model."
 
     def generateCaption(self, filename):
-        image_feature = self.processImage(VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3)), filename)
+        image_feature = self.processImage(VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3)), filename)[0]
         K.clear_session()
         self.model = load_model('Models/WholeModel.h5')
 
