@@ -135,7 +135,7 @@ class CaptionGenerator:
                         partial_caps = sequence.pad_sequences(partial_caps, maxlen=self.max_cap_len, padding='post')
                         total_count = 0
                         gen_count += 1
-                        print "yielding count: " + str(gen_count)
+                        #print "yielding count: " + str(gen_count)
                         yield [[imgs, partial_caps], next_words]
                         partial_caps = []
                         imgs = []
@@ -174,7 +174,7 @@ class CaptionGenerator:
         except:
             print "Error in saving model."
 
-    def generateCaption(filename):
+    def generateCaption(self, filename):
         image_feature = self.processImage(VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3)), filename)
         K.clear_session()
         self.model = load_model('Models/WholeModel.h5')
