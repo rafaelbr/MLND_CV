@@ -17,7 +17,7 @@ class PictureData:
     data = []
 
     def __init__(self):
-        self.processData()
+        #self.processData()
         #t = threading.Timer(7200, self.processData)
         #t.start()
 
