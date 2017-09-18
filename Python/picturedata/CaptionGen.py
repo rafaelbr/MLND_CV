@@ -36,7 +36,7 @@ class CaptionGenerator:
         self.data = pd.DataFrame(d)
 
     def processImages(self):
-        imgs = self.data
+        imgs = self.data['image']
         print len(imgs)
         if len(imgs) > 0:
             model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
@@ -146,7 +146,7 @@ class CaptionGenerator:
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
-        self.model.fit_generator(self.generate(batch_size=32), steps_per_epoch=self.total_samples/32, epochs=20, verbose=1, callbacks=callbacks_list)
+        self.model.fit_generator(self.generate(batch_size=1), steps_per_epoch=self.total_samples/1, epochs=20, verbose=1, callbacks=callbacks_list)
         try:
             self.model.save('Models/WholeModel.h5', overwrite=True)
             self.model.save_weights('Models/Weights.h5',overwrite=True)
