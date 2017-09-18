@@ -31,7 +31,7 @@ class CaptionGenerator:
             with open("descriptions/" + filename) as f:
                 content = f.readlines()
             for text in content:
-                d['caption'].append(text.strip())
+                d['caption'].append('<start>'+text.strip()+'<end>')
                 d['image'].append(f_[0]+".jpg")
         self.data = pd.DataFrame(d)
 
@@ -127,6 +127,7 @@ class CaptionGenerator:
                     next[self.word_index[text[1].split()[i+1]]] = 1
                     next_words.append(next)
                     imgs.append(current_image)
+                    print "Processed data"
                     # Prepare inputs and return pair for batch
                     if total_count >= batch_size:
                         next_words = np.asarray(next_words)
