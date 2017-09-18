@@ -40,7 +40,7 @@ class CaptionGenerator:
         print len(imgs)
         if len(imgs) > 0:
             model = VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3))
-            img_dir = "images/"
+
             imgs = self.data['image']
             c = 0
             img_features = {}
@@ -56,6 +56,7 @@ class CaptionGenerator:
             K.clear_session()
 
     def processImage(self, model, filename):
+        img_dir = "images/"
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
         img_s = image.img_to_array(img_s)
         img_s = np.expand_dims(img_s, axis=0)
