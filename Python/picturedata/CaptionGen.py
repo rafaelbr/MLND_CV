@@ -28,7 +28,7 @@ class CaptionGenerator:
         d = {'caption': [], 'image': []}
         for filename in files:
             f_ = filename.split('.')
-            with open(filename) as f:
+            with open("descriptions/" + filename) as f:
                 content = f.readlines()
             for text in content:
                 d['caption'].append(x.strip())
