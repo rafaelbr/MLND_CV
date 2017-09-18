@@ -9,6 +9,7 @@ from keras.models import load_model
 from keras.callbacks import ModelCheckpoint
 import gc
 from keras import backend as K
+from keras.layers import LSTM, Embedding, TimeDistributed, Dense, RepeatVector, merge, Activation, Flatten, GRU, Input
 
 class CaptionGenerator:
 
@@ -141,7 +142,26 @@ class CaptionGenerator:
                         next_words = []
 
     def train(self):
-        self.model = load_model('Models/WholeModel.h5')
+        embedding_dim = 128
+        image_input = Input(shape=(1000,))
+        image_model = Dense(embedding_dim, input_dim=1000, activation='relu')(image_input)
+
+        image_model = RepeatVector(self.max_cap_len)(image_model)
+
+        language_input = Input(shape=(self.max_cap_len,))
+        language_model = Embedding(self.vocab_size, 256, input_length=self.max_cap_len)(language_input)
+        language_model = LSTM(256, return_sequences=True)(language_model)
+        #language_model.add(GRU(128, return_sequences=True))
+        language_model = TimeDistributed(Dense(embedding_dim))(language_model)
+
+        output = merge([image_model, language_model], mode='concat')
+        output = LSTM(1000, return_sequences=False)(output)
+        #model.add(GRU(256, return_sequences=False))
+        output = Dense(generator.getVocabSize())(output)
+        output = Activation('softmax')(output)
+
+        self.model = Model(inputs=[image_input, language_input], outputs=[output])
+        
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
