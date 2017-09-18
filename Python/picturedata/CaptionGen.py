@@ -157,11 +157,11 @@ class CaptionGenerator:
         output = merge([image_model, language_model], mode='concat')
         output = LSTM(1000, return_sequences=False)(output)
         #model.add(GRU(256, return_sequences=False))
-        output = Dense(generator.getVocabSize())(output)
+        output = Dense(self.vocab_size)(output)
         output = Activation('softmax')(output)
 
         self.model = Model(inputs=[image_input, language_input], outputs=[output])
-        
+
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
