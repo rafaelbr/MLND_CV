@@ -124,10 +124,9 @@ class CaptionGenerator:
                     partial_caps.append(partial)
                     # Get last word as next word and encode it
                     next = np.zeros(self.vocab_size)
-                    next[self.word_index[text[1].split()[i+1]]] = 1
+                    next[self.word_index[text['caption'].split()[i+1]]] = 1
                     next_words.append(next)
                     imgs.append(current_image)
-                    print "Processed data"
                     # Prepare inputs and return pair for batch
                     if total_count >= batch_size:
                         next_words = np.asarray(next_words)
