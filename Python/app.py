@@ -32,4 +32,4 @@ def add_description(image_id):
 
 if __name__ == '__main__':
     print "Running flask"
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, use_reloader=False, host='0.0.0.0')
