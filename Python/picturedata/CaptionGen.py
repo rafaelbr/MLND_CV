@@ -32,7 +32,7 @@ class CaptionGenerator:
                 content = f.readlines()
             for text in content:
                 d['caption'].append(text.strip())
-                d['image'].append(filename)
+                d['image'].append(f_[0]+".jpg")
         self.data = pd.DataFrame(d)
 
     def processImages(self):
