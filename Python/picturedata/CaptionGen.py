@@ -55,7 +55,7 @@ class CaptionGenerator:
             self.features = img_features
             K.clear_session()
 
-    def processImage(model, filename):
+    def processImage(self, model, filename):
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
         img_s = image.img_to_array(img_s)
         img_s = np.expand_dims(img_s, axis=0)
