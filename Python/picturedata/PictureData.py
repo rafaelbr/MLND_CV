@@ -17,10 +17,10 @@ class PictureData:
     data = []
 
     def __init__(self):
-        #self.processData()
+        self.processData()
         print "Init picturedata"
-        #t = threading.Timer(7200, self.processData)
-        #t.start()
+        t = threading.Timer(7200, self.processData)
+        t.start()
 
     def processData(self):
         self.data = []

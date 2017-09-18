@@ -28,7 +28,7 @@ import br.com.geekfox.socialpicture.json.ImageData;
  */
 
 public class PictureDataService {
-    private static final String SERVICE_URL = "http://104.197.163.59:5000/";
+    private static final String SERVICE_URL = "http://52.36.88.3:5000/";
     private static final String SERVICE_ENDPOINT = "socialpicture/api/v1.0/images";
 
     private static final int RETURN_OK = 20;
@@ -79,7 +79,7 @@ public class PictureDataService {
             return null;
         }
         finally {
-            if (urlConnection != null) {
+           if (urlConnection != null) {
                 urlConnection.disconnect();
             }
             if (reader != null) {
