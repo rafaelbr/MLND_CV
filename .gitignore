@@ -157,6 +157,8 @@ ENV/
 *.npy
 /Python/images
 /Python/data
+/Python/descriptions
+/Python/coco
 /data
 /Python/annotations
 /Python/Flickr8k
