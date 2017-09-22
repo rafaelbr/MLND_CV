@@ -28,9 +28,9 @@ model = Model(inputs=[image_input, language_input], outputs=[output])
 model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
 file_name = 'weights-improvement-{epoch:02d}.hdf5'
-checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
+checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, save_weights_only=True, mode='min')
 callbacks_list = [checkpoint]
-model.fit_generator(generator.generate(batch_size=32), steps_per_epoch=generator.total_samples/32, epochs=50, verbose=1, callbacks=callbacks_list)
+model.fit_generator(generator.generate(batch_size=32), steps_per_epoch=generator.total_samples/32, epochs=30, verbose=1, callbacks=callbacks_list)
 try:
     model.save('Models/WholeModel.h5', overwrite=True)
     model.save_weights('Models/Weights.h5',overwrite=True)
