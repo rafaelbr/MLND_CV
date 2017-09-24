@@ -22,6 +22,11 @@ class PictureData:
         t = threading.Timer(7200, self.processData)
         t.start()
 
+    """
+    processData()
+
+    Responsible to load images and descriptions to server online dataset. Here we initiate model train and caption generation.
+    """
     def processData(self):
         self.data = []
         generator = CaptionGenerator()
@@ -58,16 +63,30 @@ class PictureData:
 
             self.data.append(image)
 
+    """
+    get_data()
 
+    Return all data saved.
+    """
     def get_data(self):
         return json.dumps(self.data)
 
+    """
+    get_image(image_id)
+
+    Return image object given the image id.
+    """
     def get_image(self, image_id):
         image = [image for image in self.data if image['id'] == image_id]
         if len(image) == 0:
             abort(404)
         return jsonify(image[0])
 
+    """
+    new_image()
+
+    Save new image object from request object.
+    """
     def new_image(self):
         if not request.json or not 'image' in request.json:
             abort(400)
@@ -90,6 +109,11 @@ class PictureData:
         self.data.append(image)
         return jsonify(image), 201
 
+    """
+    add_description(image_id)
+
+    Add description for image given image id, description given from request object.
+    """
     def add_description(self, image_id):
         if not request.json or not 'description' in request.json:
             abort(400)

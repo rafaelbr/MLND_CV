@@ -24,6 +24,11 @@ class CaptionGenerator:
 
         self.initValues()
 
+    """
+    loadCaptions()
+
+    Load all descriptions from folder for each image.
+    """
     def loadCaptions(self):
         files = os.listdir("descriptions")
         d = {'caption': [], 'image': []}
@@ -36,6 +41,11 @@ class CaptionGenerator:
                 d['image'].append(f_[0]+".jpg")
         self.data = pd.DataFrame(d)
 
+    """
+    processImages()
+
+    Process images from table on VGG-16 model.
+    """
     def processImages(self):
         imgs = self.data['image']
         print len(imgs)
@@ -56,6 +66,11 @@ class CaptionGenerator:
             self.features = img_features
             K.clear_session()
 
+    """
+    processImage(model, filename)
+
+    Given model and filename, process an image on that filename over model.
+    """
     def processImage(self, model, filename):
         img_dir = "images/"
         img_s = image.load_img(img_dir + filename, target_size=(224, 224))
@@ -66,6 +81,11 @@ class CaptionGenerator:
         img_feature = model.predict(img_s)
         return img_feature
 
+    """
+    initValues()
+
+    Init all parameters for generator.
+    """
     def initValues(self):
         self.loadCaptions()
         self.processImages()
@@ -104,7 +124,11 @@ class CaptionGenerator:
         print "Image count: "+str(len(self.images))
 
 
+    """
+    generate(batch_size)
 
+    Generate batches of prepared captions and images for training model.
+    """
     def generate(self, batch_size=32):
         partial_caps = []
         next_words = []
@@ -141,7 +165,13 @@ class CaptionGenerator:
                         imgs = []
                         next_words = []
 
+    """
+    train()
+
+    Train a model.
+    """
     def train(self):
+        #Constructing a new model
         embedding_dim = 128
         image_input = Input(shape=(1000,))
         image_model = Dense(embedding_dim, input_dim=1000, activation='relu')(image_input)
@@ -163,6 +193,8 @@ class CaptionGenerator:
         self.model = Model(inputs=[image_input, language_input], outputs=[output])
 
         self.model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+
+        #Train that model
         file_name = 'weights-improvement-{epoch:02d}.hdf5'
         checkpoint = ModelCheckpoint(file_name, monitor='loss', verbose=1, save_best_only=True, mode='min')
         callbacks_list = [checkpoint]
@@ -174,13 +206,19 @@ class CaptionGenerator:
         except:
             print "Error in saving model."
 
+    """
+    generateCaption(filename)
+
+    Generate a caption for a image, given a image filename.
+    """
     def generateCaption(self, filename):
         image_feature = self.processImage(VGG16(weights='imagenet', include_top=True, input_shape = (224, 224, 3)), filename)[0]
         K.clear_session()
         self.model = load_model('Models/WholeModel.h5')
-
+        #Give only start to prediction
         start = [self.word_index['<start>']]
         captions = [[start, 0.0]]
+        #Predict and predict word after word on caption using words already predicted
         while(len(captions[0][0]) < self.max_cap_len):
             temp_captions = []
             for caption in captions:
@@ -197,7 +235,7 @@ class CaptionGenerator:
             captions.sort(key = lambda l:l[1])
             captions = captions[-3:]
 
-
+        #Resort and decode caption
         captions.sort(key = lambda l:l[1])
         best_caption = captions[-1][0]
         caption = " ".join([self.index_word[index] for index in best_caption])

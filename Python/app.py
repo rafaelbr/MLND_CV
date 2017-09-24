@@ -10,6 +10,8 @@ picturedata = PictureData()
 def index():
     return "Hello world!"
 
+#Creating WebService routes
+
 @app.route("/images/<path:path>")
 def send_images(path):
     return send_from_directory('images', path)
@@ -32,4 +34,5 @@ def add_description(image_id):
 
 if __name__ == '__main__':
     print "Running flask"
+    #Starting Flask
     app.run(debug=True, use_reloader=False, host='0.0.0.0')

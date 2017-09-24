@@ -17,6 +17,11 @@ class DataGenerator:
 
         self.initValues()
 
+    """
+    initValues()
+
+    Init all parameters.
+    """
     def initValues(self):
 
         self.total_samples=0
@@ -53,6 +58,11 @@ class DataGenerator:
             self.images.append(self.features[caption['image']])
         print "Image count: "+str(len(self.images))
 
+    """
+    generate(batch_size)
+
+    Generate a batch with coded captions and images to be trained on a model.
+    """
     def generate(self, batch_size=32):
         partial_caps = []
         next_words = []
@@ -89,8 +99,18 @@ class DataGenerator:
                         imgs = []
                         next_words = []
 
+    """
+    getMaxCapLen()
+
+    get max_cap_len
+    """
     def getMaxCapLen(self):
         return self.max_cap_len
 
+    """
+    getVocabSize()
+
+    get vocab_size
+    """
     def getVocabSize(self):
         return self.vocab_size
