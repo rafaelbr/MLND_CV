@@ -12,3 +12,12 @@ Flicker8k_dataset e Flickr8k_text no caminho Python/Flickr8k.
 
 O arquivo train_model.py é uma forma mais controlada de treinar o modelo, pois evita 
 a dependência do Jupyter aberto, e também pode ser executado em segundo plano.
+
+Bibliotecas utilizadas:
+
+- Keras
+- Pandas
+- Numpy
+- Tensorflow
+- CV2
+- Flask
